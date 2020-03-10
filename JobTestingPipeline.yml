@@ -8,27 +8,23 @@ pool:
 
 
 jobs:
-  - job: Windows
-    pool: 
-      vmImage: 'vs2017-win2016'
+  - job: ToBeFailed
     steps:
-      - script: echo hello from Windows
-
-  - job: macOS
-    dependsOn: Windows
-    pool:
-      vmImage: 'macOS-10.14'
+      - script: exit 1
+  
+  - job: DependendOnFailure
+    dependsOn: ToBeFailed
+    condition: failed()
     steps:
-      - script: echo hello from macOS
+      - script: echo This runs when first Job fails. 
 
-  - job: Linux
+  - job: DependingAll
     dependsOn: 
-      - macOS
-      - Windows
-    pool:
-      vmImage: 'ubuntu-16.04'
+      - ToBeFailed
+      - DependendOnFailure
+    condition: succeeded('DependendOnFailure')
     steps:
-      - script: echo hello from Linux. 
+      - script: echo This will run when the second Job succeeds. 
     
       
 

@@ -1,3 +1,4 @@
+[![Build Status](https://dev.azure.com/DevOpsTestLabCV/MicrosoftTestProject/_apis/build/status/Christina1996.pipelines-java?branchName=master)](https://dev.azure.com/DevOpsTestLabCV/MicrosoftTestProject/_build/latest?definitionId=5&branchName=master)
 
 # Contributing
 

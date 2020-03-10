@@ -12,6 +12,7 @@ jobs:
   pool:
     vmImage: 'ubuntu-16.04'
   steps:
+  - script: npm install
   - script: npm test
   - task: PublishBuildArtifacts@1
     inputs:

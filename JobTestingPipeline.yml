@@ -6,17 +6,14 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-stages:
-- stage: A
-  jobs:
-  - job: A1
-    steps:
-      - bash: echo A1
-  - job: A2
 
-- stage: B
-  jobs:
-  - job: B1
-  - job: B2
+jobs:
+  - job: Debug
     steps:
-      - bash: echo B2
+      - script: echo hello from the Debug Build. 
+  - job: Release
+    dependsOn: Debug
+    steps:
+      - script: echo hello from the Release Build. 
+      
+

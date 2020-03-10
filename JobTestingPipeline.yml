@@ -6,20 +6,32 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
+# test and upload my code as an artifact named WebSite
 jobs:
-- job: Test
-  strategy:
-    maxParallel: 2
-    matrix: 
-      US_IE:
-        Location: US
-        Browser: IE
-      US_Chrome:
-        Location: US
-        Browser: Chrome
-      Europe_Chrome:
-        Location: Europe
-        Browser: Chrome
+- job: Build
+  pool:
+    vmImage: 'ubuntu-16.04'
+  steps:
+  - script: npm test
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: '$(System.DefaultWorkingDirectory)'
+      artifactName: WebSite
+
+# download the artifact and deploy it only if the build job succeeded
+- job: Deploy
+  pool:
+    vmImage: 'ubuntu-16.04'
+  steps:
+  - checkout: none #skip checking out the default repository resource
+  - task: DownloadBuildArtifacts@0
+    displayName: 'Download Build Artifacts'
+    inputs:
+      artifactName: WebSite
+      downloadPath: $(System.DefaultWorkingDirectory)
+
+  dependsOn: Build
+  condition: succeeded()
     
       
 

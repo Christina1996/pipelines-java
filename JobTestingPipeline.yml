@@ -6,25 +6,20 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-
 jobs:
-  - job: ToBeFailed
-    steps:
-      - script: echo no failure now
-  
-  - job: DependendOnFailure
-    dependsOn: ToBeFailed
-    condition: failed()
-    steps:
-      - script: echo This runs when first Job fails. 
-
-  - job: DependingAll
-    dependsOn: 
-      - ToBeFailed
-      - DependendOnFailure
-    condition: succeeded('DependendOnFailure')
-    steps:
-      - script: echo This will run when the second Job succeeds. 
+- job: Test
+  strategy:
+    maxParallel: 2
+    matrix: 
+      US_IE:
+        Location: US
+        Browser: IE
+      US_Chrome:
+        Location: US
+        Browser: Chrome
+      Europe_Chrome:
+        Location: Europe
+        Browser: Chrome
     
       
 

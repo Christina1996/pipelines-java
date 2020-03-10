@@ -10,7 +10,7 @@ pool:
 jobs:
   - job: ToBeFailed
     steps:
-      - script: exit 1
+      - script: echo no failure now
   
   - job: DependendOnFailure
     dependsOn: ToBeFailed

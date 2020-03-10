@@ -8,12 +8,27 @@ pool:
 
 
 jobs:
-  - job: Debug
+  - job: Windows
+    pool: 
+      vmImage: 'vs2017-win2016'
     steps:
-      - script: echo hello from the Debug Build. 
-  - job: Release
-    dependsOn: Debug
+      - script: echo hello from Windows
+
+  - job: macOS
+    dependsOn: Windows
+    pool:
+      vmImage: 'macOS-10.14'
     steps:
-      - script: echo hello from the Release Build. 
+      - script: echo hello from macOS
+
+  - job: Linux
+    dependsOn: 
+      - macOS
+      - Windows
+    pool:
+      vmImage: 'ubuntu-16.04'
+    steps:
+      - script: echo hello from Linux. 
+    
       
 
